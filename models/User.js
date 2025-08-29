@@ -14,6 +14,7 @@ const UserSchema = new Schema({
   password: {
     type: String,
     min: 8,
+    required: () =>{return !this.githubId},
   },
   email: {
     type: String,
@@ -23,6 +24,7 @@ const UserSchema = new Schema({
   },
   githubId: {
     type: String,
+    required: () => {return !this.password}
   },
   toJSON: {
     transform: function (doc, ret) {

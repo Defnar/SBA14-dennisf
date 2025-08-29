@@ -17,6 +17,7 @@ passport.use(
                 //if exisiting user, returns the attached profile
                 if (existingUser) return done(null, profile);
 
+                //creates new user if no existing user
                 const newUser = new User({
                     githubId: profile.id,
                     username: profile.username,
@@ -25,6 +26,8 @@ passport.use(
                 })
 
                 await newUser.save();
+
+                //sends new user to be used in validation
                 done(null, newUser);
             }
             catch (err) {
