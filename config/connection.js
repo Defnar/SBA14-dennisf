@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
 const uri = process.env.MONGO_URI;
 
-export const db = mongoose.connect(uri);
+const db = mongoose.connect(uri);
+
+export default db;
