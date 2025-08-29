@@ -15,7 +15,7 @@ passport.use(
                 const existingUser = await User.findOne({githubId: profile.id});
 
                 //if exisiting user, returns the attached profile
-                if (existingUser) return done(null, profile);
+                if (existingUser) return done(null, existingUser);
 
                 //creates new user if no existing user
                 const newUser = new User({
