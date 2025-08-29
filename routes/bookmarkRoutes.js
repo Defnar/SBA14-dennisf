@@ -1,6 +1,6 @@
 import express from "express"
 import { authEditMiddleware, authUserMiddleware } from "../utils/auth";
-import {createBookmark, getAllBookmarks, }from "../controllers/bookmarkControllers"
+import {createBookmark, getAllBookmarks, getBookmark, }from "../controllers/bookmarkControllers"
 
 const router = express.Router();
 
@@ -21,7 +21,7 @@ router.use(authEditMiddleware)
 
 
 //get one bookmark
-router.get("/posts:id", ...);
+router.get("/posts:id", getBookmark);
 
 
 //update bookmark

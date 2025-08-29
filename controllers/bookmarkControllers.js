@@ -32,3 +32,9 @@ export const getAllBookmarks = async (req, res) => {
         res.status(500).json({message: err.message})
     }
 }
+
+export const getBookmark = async (req, res) => {
+    const bookmark = res.bookmark;
+
+    res.json(bookmark);
+}
