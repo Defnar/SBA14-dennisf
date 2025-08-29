@@ -34,11 +34,15 @@ const UserSchema = new Schema({
 });
 
 UserSchema.pre("save", async function (next) {
-  if (this.isNew || this.isModified("password")) {
-    saltRounds = 11;
-    this.password = bcrypt.hash(this.password, saltRounds);
+  if (this.password && (this.isNew || this.isModified("password"))) {
+    const saltRounds = 11;
+    this.password = await bcrypt.hash(this.password, saltRounds);
   }
   next();
 });
+
+UserSchema.methods.isCorrectPassword = async function(password) {
+    return await bcrypt.compare(password, this.password);
+}
 
 export const User = model("User", UserSchema);
