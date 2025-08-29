@@ -11,7 +11,8 @@ export const registerUser = async (req, res) => {
 
     await User.create(req.body);
   } catch (err) {
-    res.status(403).json({ message: err.message });
+    console.log(err);
+    return res.status(403).json({ message: err.message });
   }
 };
 

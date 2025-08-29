@@ -1,9 +1,19 @@
 import express from "express"
+import { logUserIn, registerUser } from "../controllers/userControllers";
 
 const router = express.Router();
 
-// "api/users/auth"
+
+//api/users...
+
+// "/auth"
 router.use("/auth", authRoutes)
+
+// "/login"
+router.post("/login", logUserIn)
+
+// "/register"
+router.post("/register", registerUser);
 
 
 export default router;
