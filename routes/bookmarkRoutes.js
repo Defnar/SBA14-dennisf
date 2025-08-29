@@ -1,5 +1,6 @@
 import express from "express"
 import { authEditMiddleware, authUserMiddleware } from "../utils/auth";
+import {createBookmark, }from "../controllers/bookmarkControllers"
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ router.use(authUserMiddleware)
 //api/bookmarks....
 
 //new bookmark
-router.post("/new", ...);
+router.post("/new", createBookmark);
 
 //checks for bookmark permissions and attaches notes to req if allowed
 router.use(authEditMiddleware)
