@@ -1,6 +1,6 @@
 import express from "express"
 import { authEditMiddleware, authUserMiddleware } from "../utils/auth";
-import {createBookmark, editBookmark, getAllBookmarks, getBookmark, }from "../controllers/bookmarkControllers"
+import {createBookmark, deleteBookmark, editBookmark, getAllBookmarks, getBookmark, }from "../controllers/bookmarkControllers"
 
 const router = express.Router();
 
@@ -28,7 +28,7 @@ router.get("/posts:id", getBookmark);
 router.put("/update", editBookmark);
 
 //delete bookmark
-router.delete("/delete:id", ...);
+router.delete("/delete:id", deleteBookmark);
 
 export default router;
 

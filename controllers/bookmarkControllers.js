@@ -4,12 +4,12 @@ import { User } from "../models/User";
 export const createBookmark = async (req, res) => {
   try {
     if (!req.body) {
-      res.status(400).json({ message: "Body empty" });
+      return res.status(400).json({ message: "Body empty" });
     }
 
-    const note = await Note.create({
+    const bookmark = await Bookmark.create({
       ...req.body,
-      user: req.user._id,
+      userId: req.user._id,
     });
 
     res.json({ message: "bookmark created", bookmark });
@@ -23,7 +23,7 @@ export const getAllBookmarks = async (req, res) => {
     try {
         const bookmarks = await Bookmark.find({userId: req.user._id})
 
-        if (!bookmarks) return res.json({message: "no bookmarks found"})
+        if (bookmarks.length === 0) return res.json({message: "no bookmarks found"})
 
         res.json(bookmarks);
     }
@@ -33,7 +33,7 @@ export const getAllBookmarks = async (req, res) => {
     }
 }
 
-export const getBookmark = async (req, res) => {
+export const getBookmark = (req, res) => {
     const bookmark = req.bookmark;
 
     res.json(bookmark);
@@ -48,6 +48,17 @@ export const editBookmark = async (req, res) => {
         res.json(bookmark);
     }
     catch (err) {
+        res.status(500).json({message: err.message})
+    }
+}
+
+export const deleteBookmark = async (req, res) => {
+    try {
+        await req.bookmark.deleteOne();
+        res.json({message: "bookmark successfully deleted"})
+    }
+    catch (err) {
+        console.log(err);
         res.status(500).json({message: err.message})
     }
 }
