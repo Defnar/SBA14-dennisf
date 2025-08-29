@@ -10,25 +10,25 @@ router.use(authUserMiddleware)
 //api/bookmarks....
 
 //new bookmark
-router.post("/new", createBookmark);
+router.post("/", createBookmark);
 
 
 //get all bookmarks
-router.get("/posts", getAllBookmarks);
+router.get("/", getAllBookmarks);
 
 //checks for bookmark permissions and attaches notes to req if allowed
 router.use(authEditMiddleware)
 
 
 //get one bookmark
-router.get("/posts/:id", getBookmark);
+router.get("/:id", getBookmark);
 
 
 //update bookmark
-router.put("/update", editBookmark);
+router.put("/:id", editBookmark);
 
 //delete bookmark
-router.delete("/delete/:id", deleteBookmark);
+router.delete(":id", deleteBookmark);
 
 export default router;
 
