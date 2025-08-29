@@ -2,9 +2,9 @@ import express from "express"
 const router = express.Router();
 
 // "/api/users"
-router.get("/users", userRoutes);
+router.use("/users", userRoutes);
 
 // "/api/bookmarks"
-router.get("/bookmarks", bookmarkRoutes);
+router.use("/bookmarks", bookmarkRoutes);
 
 export default router;
