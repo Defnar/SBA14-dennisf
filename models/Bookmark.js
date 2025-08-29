@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 
 const BookmarkSchema = new Schema({
     title: {
@@ -15,3 +15,5 @@ const BookmarkSchema = new Schema({
         required: true
     }
 })
+
+export const Bookmark = model("Bookmark", BookmarkSchema);

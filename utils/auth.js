@@ -1,10 +1,12 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/User";
+import {Bookmark} from "../models/Bookmark";
 
 const secret = process.env.SECRET;
 const expiration = "15m";
 
-export const authMiddleware = (req, res, next) => {
+//general middleware to check if user is authenticated to work with bookmarks
+export const authUserMiddleware = (req, res, next) => {
   let token = req.headers.authorization;
 
   if (!token) retres.status(401).json({ message: "You must be logged in" });
@@ -26,4 +28,26 @@ export const signToken = (username, email, _id) => {
     const payload = {username, email, _id};
     
     return jwt.sign({data: payload}, secret, {expiresIn: expiration})
+}
+
+
+//checks if the user is allowed to edit the bookmark or not
+export const authEditMiddleware = async (req, res, next) => {
+    try {
+    
+    const bookmark = await Bookmark.findById(req.params.id);
+
+    if (!bookmark) return res.status(403).json({message: "no bookmark found"})
+
+    if (bookmark.userId.toString() !== req.user._id.toString()) return res.status(401).json({message: "unauthorized"})
+
+    req.bookmark = bookmark;
+
+    next();
+    }
+    catch (err) {
+        console.log(err)
+        return res.status(500).json({message: err.message})
+    }
+
 }
