@@ -21,7 +21,7 @@ export const logUserIn = async (req, res) => {
     const user = await User.find({ email: email });
 
     if (!user || !user.isCorrectPassword(password)) {
-      res.status(403).json({ message: "email and password do not match" });
+      return res.status(403).json({ message: "email and password do not match" });
     }
 
     const token = signToken(user);
