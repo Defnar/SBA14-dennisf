@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import {Bookmark} from "../models/Bookmark.js";
+import { Bookmark } from "../models/Bookmark.js";
 
 const secret = process.env.SECRET;
 const expiration = "15m";
@@ -24,30 +24,27 @@ export const authUserMiddleware = (req, res, next) => {
 };
 
 export const signToken = (user) => {
-    const payload = {username: user.username, email: user.email, _id: user._id};
-    console.log(payload);
-    
-    return jwt.sign({data: payload}, secret, {expiresIn: expiration})
-}
+  const payload = { username: user.username, email: user.email, _id: user._id };
 
+  return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+};
 
 //checks if the user is allowed to edit the bookmark or not
 export const authEditMiddleware = async (req, res, next) => {
-    try {
-    
+  try {
     const bookmark = await Bookmark.findById(req.params.id);
 
-    if (!bookmark) return res.status(403).json({message: "no bookmark found"})
+    if (!bookmark)
+      return res.status(403).json({ message: "no bookmark found" });
 
-    if (bookmark.userId.toString() !== req.user._id.toString()) return res.status(401).json({message: "unauthorized"})
+    if (bookmark.userId.toString() !== req.user._id.toString())
+      return res.status(401).json({ message: "unauthorized" });
 
     req.bookmark = bookmark;
 
     next();
-    }
-    catch (err) {
-        console.log(err)
-        return res.status(500).json({message: err.message})
-    }
-
-}
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: err.message });
+  }
+};

@@ -6,7 +6,6 @@ export const createBookmark = async (req, res) => {
       return res.status(400).json({ message: "Body empty" });
     }
 
-    console.log(req.user);
 
     const bookmark = await Bookmark.create({
       ...req.body,

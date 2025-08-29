@@ -6,10 +6,12 @@ export const registerUser = async (req, res) => {
     if (!req.body)
       return res.status(400).json({ message: "Body cannot be empty" });
 
-    if (User.find({ email: req.user.email }))
+    if (User.find({ email: req.body.email }).length > 0)
       return res.status(403).json({ message: "email already exists" });
 
-    await User.create(req.body);
+    const user = await User.create(req.body);
+
+    res.json({ message: "user created!", user });
   } catch (err) {
     console.log(err);
     return res.status(403).json({ message: err.message });
@@ -19,10 +21,12 @@ export const registerUser = async (req, res) => {
 export const logUserIn = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.find({ email: email });
+    const user = await User.findOne({ email: email });
 
     if (!user || !user.isCorrectPassword(password)) {
-      return res.status(403).json({ message: "email and password do not match" });
+      return res
+        .status(403)
+        .json({ message: "email and password do not match" });
     }
 
     const token = signToken(user);

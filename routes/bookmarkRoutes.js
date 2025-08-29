@@ -1,34 +1,28 @@
-import express from "express"
+import express from "express";
 import { authEditMiddleware, authUserMiddleware } from "../utils/auth.js";
-import {createBookmark, deleteBookmark, editBookmark, getAllBookmarks, getBookmark, }from "../controllers/bookmarkControllers.js"
+import {
+  createBookmark,
+  deleteBookmark,
+  editBookmark,
+  getAllBookmarks,
+  getBookmark,
+} from "../controllers/bookmarkControllers.js";
 
 const router = express.Router();
 
-
-router.use(authUserMiddleware)
+router.use(authUserMiddleware);
 
 //api/bookmarks....
 
-//new bookmark
 router.post("/", createBookmark);
-
-
-//get all bookmarks
 router.get("/", getAllBookmarks);
 
-//checks for bookmark permissions and attaches notes to req if allowed
-router.use(authEditMiddleware)
+//checks for bookmark permissions and attaches bookmark to req if allowed
+router.use("/:id", authEditMiddleware);
 
-
-//get one bookmark
+//operations on solo bookmark, such as get one, edit one, delete one
 router.get("/:id", getBookmark);
-
-
-//update bookmark
 router.put("/:id", editBookmark);
-
-//delete bookmark
-router.delete(":id", deleteBookmark);
+router.delete("/:id", deleteBookmark);
 
 export default router;
-

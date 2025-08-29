@@ -1,20 +1,16 @@
-import express from "express"
+import express from "express";
 import { logUserIn, registerUser } from "../controllers/userControllers.js";
-import authRoutes from "./authRoutes.js"
+import authRoutes from "./authRoutes.js";
 
 const router = express.Router();
 
-
 //api/users...
 
-// "/auth"
-router.use("/auth", authRoutes)
+//for Oauth login/register
+router.use("/auth", authRoutes);
 
-// "/login"
-router.post("/login", logUserIn)
-
-// "/register"
+//local/non auth
+router.post("/login", logUserIn);
 router.post("/register", registerUser);
-
 
 export default router;
