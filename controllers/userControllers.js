@@ -1,5 +1,5 @@
-import { User } from "../models/User";
-import { signToken } from "../utils/auth";
+import { User } from "../models/User.js";
+import { signToken } from "../utils/auth.js";
 
 export const registerUser = async (req, res) => {
   try {

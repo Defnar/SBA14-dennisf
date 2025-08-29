@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
-import { User } from "../models/User";
-import {Bookmark} from "../models/Bookmark";
+import {Bookmark} from "../models/Bookmark.js";
 
 const secret = process.env.SECRET;
 const expiration = "15m";
@@ -9,7 +8,7 @@ const expiration = "15m";
 export const authUserMiddleware = (req, res, next) => {
   let token = req.headers.authorization;
 
-  if (!token) retres.status(401).json({ message: "You must be logged in" });
+  if (!token) res.status(401).json({ message: "You must be logged in" });
 
   token = token.split(" ").pop().trim();
 
@@ -24,8 +23,9 @@ export const authUserMiddleware = (req, res, next) => {
   next();
 };
 
-export const signToken = (username, email, _id) => {
-    const payload = {username, email, _id};
+export const signToken = (user) => {
+    const payload = {username: user.username, email: user.email, _id: user._id};
+    console.log(payload);
     
     return jwt.sign({data: payload}, secret, {expiresIn: expiration})
 }

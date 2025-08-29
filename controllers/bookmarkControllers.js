@@ -1,11 +1,12 @@
-import { Bookmark } from "../models/Bookmark";
-import { User } from "../models/User";
+import { Bookmark } from "../models/Bookmark.js";
 
 export const createBookmark = async (req, res) => {
   try {
     if (!req.body) {
       return res.status(400).json({ message: "Body empty" });
     }
+
+    console.log(req.user);
 
     const bookmark = await Bookmark.create({
       ...req.body,

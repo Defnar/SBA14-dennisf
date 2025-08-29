@@ -1,6 +1,7 @@
 import express from "express";
+import "../config/passport.js";
 import passport from "passport";
-import { signToken } from "../utils/auth";
+import { signToken } from "../utils/auth.js";
 
 const router = express.Router();
 
